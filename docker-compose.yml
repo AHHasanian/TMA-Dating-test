@@ -1,0 +1,21 @@
+services:
+  frontend:
+    build:
+      context: ./telegram-mini-app-frontend
+      dockerfile: Dockerfile
+
+    container_name: telegram-mini-app-frontend
+
+    ports:
+      - "3000:3000"
+
+    volumes:
+      - ./telegram-mini-app-frontend:/app
+      - /app/node_modules
+      - /app/.next
+
+    environment:
+      NODE_ENV: development
+      WATCHPACK_POLLING: "true"
+
+    restart: unless-stopped
