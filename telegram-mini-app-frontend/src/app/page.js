@@ -1,5 +1,5 @@
 export default function Home() {
-  const appName = "Telegram Mini App see me 1599";
+  const appName = process.env.NEXT_PUBLIC_APP_NAME;
 
   return (
     <main>
