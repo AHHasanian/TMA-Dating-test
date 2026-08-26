@@ -1,4 +1,4 @@
-import Counter from "../components/Counter";
+import TelegramUser from "../components/TelegramUser";
 
 export default function Home() {
   const appName = process.env.NEXT_PUBLIC_APP_NAME;
@@ -6,9 +6,9 @@ export default function Home() {
   return (
     <main>
       <h1>{appName}</h1>
-      <p>Welcome to my application.</p>
+      <p>Welcome to my application 110.</p>
 
-      <Counter />
+      <TelegramUser />
     </main>
   );
 }
