@@ -22,3 +22,46 @@ services:
       WATCHPACK_POLLING: "true"
 
     restart: unless-stopped
+
+  backend:
+    build:
+      context: ./t-m-a-backend
+      dockerfile: Dockerfile
+
+    container_name: t-m-a-backend
+
+    ports:
+      - "3001:3001"
+
+    volumes:
+      - ./t-m-a-backend:/app
+      - /app/node_modules
+
+    env_file:
+      - ./t-m-a-backend/.env
+
+    environment:
+      NODE_ENV: development
+
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:17
+
+    container_name: t-m-a-postgres
+
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: tma_db
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
