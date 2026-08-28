@@ -1,0 +1,140 @@
+.flex-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.flex-layout__item {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-layout__item--centered {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.checking-profile__icon {
+  width: 128px;
+  height: 128px;
+  margin-bottom: 32px;
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checking-profile__ring {
+  position: absolute;
+  inset: 0;
+  border: 4px solid var(--surface-container-highest);
+  border-radius: var(--radius-full);
+
+  animation: checking-profile-spin 3s linear infinite;
+}
+
+.checking-profile__dot {
+  position: absolute;
+  top: -4;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  transform: translateX(-50%);
+  border-radius: var(--radius-full);
+  background: var(--surface-tint);
+}
+
+.checking-profile__icon-inner {
+  height: 80px;
+  width: 80px;
+  border-radius: var(--radius-full);
+  background: var(--primary-container);
+  transform-origin: center;
+  animation: checking-profile-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.checking-profile__icon-inner-heart {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+}
+
+@keyframes checking-profile-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes checking-profile-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+.profile-check__title {
+  color: var(--on-surface);
+  font-size: var(--headline-md-size);
+  line-height: var(--headline-md-line-height);
+  font-weight: var(--headline-md-weight);
+}
+
+.profile-check__description {
+  max-width: 280px;
+  margin-top: 16px;
+  color: var(--on-surface-variant);
+  font-size: var(--body-md-size);
+  line-height: var(--body-md-line-height);
+  font-weight: var(--body-md-weight);
+  text-align: center;
+  opacity: 0.8;
+}
+
+.checking-profile__progress {
+  margin-top: 48px;
+  width: 192px;
+  height: 4px;
+  overflow: hidden;
+  position: relative;
+  border-radius: var(--radius-full);
+  background: var(--surface-container-highest);
+}
+
+.checking-profile__progress-bar {
+  width: 30%;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--surface-tint);
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: checking-profile-progress 1s ease-in-out infinite alternate;
+}
+
+@keyframes checking-profile-progress {
+  from {
+    left: 0;
+  }
+  to {
+    left: 70%;
+  }
+}

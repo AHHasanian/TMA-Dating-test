@@ -1,0 +1,66 @@
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-family: "Inter", sans-serif;
+
+  --headline-lg-size: 28px;
+  --headline-lg-weight: 700;
+  --headline-lg-line-height: 34px;
+  --headline-lg-letter-spacing: -0.02em;
+
+  --headline-md-size: 22px;
+  --headline-md-weight: 600;
+  --headline-md-line-height: 28px;
+  --headline-md-letter-spacing: -0.01em;
+
+  --headline-sm-size: 18px;
+  --headline-sm-weight: 600;
+  --headline-sm-line-height: 24px;
+
+  --body-lg-size: 17px;
+  --body-lg-weight: 400;
+  --body-lg-line-height: 24px;
+
+  --body-md-size: 15px;
+  --body-md-weight: 400;
+  --body-md-line-height: 20px;
+
+  --label-md-size: 13px;
+  --label-md-weight: 500;
+  --label-md-line-height: 18px;
+  --label-md-letter-spacing: 0.01em;
+
+  --label-sm-size: 11px;
+  --label-sm-weight: 600;
+  --label-sm-line-height: 14px;
+}
