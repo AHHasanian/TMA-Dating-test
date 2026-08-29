@@ -23,6 +23,10 @@ const apiEndpoints = [
     method: "POST",
     path: "/api/users",
   },
+  {
+    method: "POST",
+    path: "/api/auth/telegram",
+  },
 ];
 
 router.get("/", (req, res) => {
