@@ -7,3 +7,6 @@
 
 /* Layout */
 @import "../styles/layout/grid.css";
+
+/* components */
+@import "../styles/components/loading.css";
