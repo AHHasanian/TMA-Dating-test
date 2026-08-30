@@ -1,12 +1,15 @@
 "use client";
 
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import styles from "./CheckingProfile.module.css";
 import useTelegram from "@/hooks/useTelegram";
 import { authenticateTelegram } from "@/services/api";
 
 export default function CheckingProfilePage() {
+  const router = useRouter();
+
   const telegram = useTelegram();
   const user = telegram?.initDataUnsafe?.user;
 
@@ -23,11 +26,22 @@ export default function CheckingProfilePage() {
     authenticateTelegram(telegram.initData)
       .then((data) => {
         console.log("Auth response:", data);
+
+        if (!data.success) {
+          console.error("Telegram authentication failed:", data.message);
+          return;
+        }
+
+        if (data.newUser) {
+          router.push("/entering-information");
+        } else {
+          router.push("/welcome");
+        }
       })
       .catch((error) => {
         console.error("Auth error:", error);
       });
-  }, [telegram, user]);
+  }, [telegram, user, router]);
 
   return (
     <main>

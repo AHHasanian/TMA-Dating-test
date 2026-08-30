@@ -1,6 +1,7 @@
 // برای اجرای لوکال اعمال شود
 // const API_URL = "http://localhost:3001";
-//برای اعمال روی هاست اعمال شود
+
+// برای اعمال روی هاست اعمال شود
 const API_URL = "https://telegram-mini-app.ahhasanian.workers.dev";
 
 async function request(endpoint, options = {}) {
@@ -27,5 +28,12 @@ export function authenticateTelegram(initData) {
     body: JSON.stringify({
       initData,
     }),
+  });
+}
+
+export function createUser(userData) {
+  return request("/api/users", {
+    method: "POST",
+    body: JSON.stringify(userData),
   });
 }

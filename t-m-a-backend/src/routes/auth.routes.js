@@ -3,7 +3,7 @@ import crypto from "crypto";
 
 const router = express.Router();
 
-router.post("/telegram", (req, res) => {
+router.post("/telegram", async (req, res) => {
   try {
     const { initData } = req.body;
 
@@ -50,6 +50,7 @@ router.post("/telegram", (req, res) => {
       .update(dataCheckString)
       .digest("hex");
 
+    // 1. Telegram authentication
     if (calculatedHash !== receivedHash) {
       return res.status(401).json({
         success: false,
@@ -57,13 +58,47 @@ router.post("/telegram", (req, res) => {
       });
     }
 
+    // 2. Telegram authentication successful
     const userData = params.get("user");
+    const telegramUser = userData ? JSON.parse(userData) : null;
 
-    const user = userData ? JSON.parse(userData) : null;
+    if (!telegramUser?.id) {
+      return res.status(400).json({
+        success: false,
+        message: "Telegram user data is missing",
+      });
+    }
 
-    return res.json({
+    const telegramId = telegramUser.id;
+
+    // 3. Find user in database
+    const userResponse = await fetch(
+      `http://localhost:3001/api/users/telegram/${telegramId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+
+    const userResult = await userResponse.json();
+
+    // 4. User exists
+    if (userResponse.ok) {
+      return res.status(200).json({
+        success: true,
+        newUser: false,
+        telegramUser,
+        user: userResult.user,
+      });
+    }
+
+    // 5. User does not exist
+    return res.status(200).json({
       success: true,
-      user,
+      newUser: true,
+      telegramUser,
     });
   } catch (error) {
     console.error("Telegram authentication error:", error);
