@@ -80,6 +80,7 @@
 .welcome__avatar-svg {
   width: 64px;
   height: 64px;
+  border-radius: var(--radius-full);
 }
 .welcome__info-title {
   color: var(--on-surface);

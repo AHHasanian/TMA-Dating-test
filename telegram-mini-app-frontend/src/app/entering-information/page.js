@@ -6,10 +6,12 @@ import { useRouter } from "next/navigation";
 import styles from "./enteringInformation.module.css";
 import { createUser } from "@/services/api";
 import useTelegram from "@/hooks/useTelegram";
+import { useAuth } from "@/context/AuthContext";
 
 export default function EnteringInformationPage() {
   const router = useRouter();
   const telegram = useTelegram();
+  const { setUser } = useAuth();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -42,19 +44,55 @@ export default function EnteringInformationPage() {
         throw new Error("Telegram user information is not available");
       }
 
+      console.log("Telegram User:", telegramUser);
+
+      console.log("Create User Payload:", {
+        telegram_id: telegramUser.id,
+        telegram_username: telegramUser.username,
+        telegram_first_name: telegramUser.first_name,
+        telegram_last_name: telegramUser.last_name,
+        telegram_photo_url: telegramUser.photo_url,
+        telegram_language_code: telegramUser.language_code,
+
+        tma_username: null,
+        tma_first_name: formData.firstName.trim(),
+        tma_last_name: formData.lastName.trim(),
+        tma_photo_url: null,
+        tma_age: Number(formData.age),
+
+        tma_gender: null,
+        tma_sexual_orientation: null,
+      });
       const data = await createUser({
         telegram_id: telegramUser.id,
-        username: telegramUser.username,
-        first_name: formData.firstName,
-        last_name: formData.lastName,
-        age: Number(formData.age),
+        telegram_username: telegramUser.username,
+        telegram_first_name: telegramUser.first_name,
+        telegram_last_name: telegramUser.last_name,
+        telegram_photo_url: telegramUser.photo_url,
+        telegram_language_code: telegramUser.language_code,
+
+        tma_username: null,
+        tma_first_name: formData.firstName.trim(),
+        tma_last_name: formData.lastName.trim(),
+        tma_photo_url: null,
+        tma_age: Number(formData.age),
+
+        tma_gender: null,
+        tma_sexual_orientation: null,
       });
 
       console.log("Create user response:", data);
+
+      if (!data.success) {
+        throw new Error(data.message || "Failed to create user");
+      }
+
+      setUser(data.user);
+
       router.push("/creating-profile");
     } catch (error) {
       console.error("Create user error:", error);
-      setError(error.message);
+      setError(error.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -70,7 +108,6 @@ export default function EnteringInformationPage() {
             </h1>
           </header>
 
-          {/* Main Content */}
           <section className={styles["profile-setup__content"]}>
             <div className={styles["profile-setup__intro"]}>
               <h2 className={styles["profile-setup__title"]}>

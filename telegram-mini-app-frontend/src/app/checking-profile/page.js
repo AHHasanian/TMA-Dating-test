@@ -1,20 +1,26 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 import styles from "./CheckingProfile.module.css";
 import useTelegram from "@/hooks/useTelegram";
 import { authenticateTelegram } from "@/services/api";
+import { useAuth } from "@/context/AuthContext";
 
 export default function CheckingProfilePage() {
   const router = useRouter();
+  const { setUser } = useAuth();
 
   const telegram = useTelegram();
   const user = telegram?.initDataUnsafe?.user;
 
+  const authStarted = useRef(false);
+
   useEffect(() => {
-    if (!telegram?.initData || !user) return;
+    if (!telegram?.initData || !user || authStarted.current) return;
+
+    authStarted.current = true;
 
     console.log("Telegram User:", user);
     console.log("id:", user.id);
@@ -22,6 +28,7 @@ export default function CheckingProfilePage() {
     console.log("last_name:", user.last_name);
     console.log("username:", user.username);
     console.log("photo_url:", user.photo_url);
+    console.log("photo_url:", user.language_code);
 
     authenticateTelegram(telegram.initData)
       .then((data) => {
@@ -29,19 +36,23 @@ export default function CheckingProfilePage() {
 
         if (!data.success) {
           console.error("Telegram authentication failed:", data.message);
+
+          authStarted.current = false;
           return;
         }
 
         if (data.newUser) {
           router.push("/entering-information");
         } else {
+          setUser(data.user);
           router.push("/welcome");
         }
       })
       .catch((error) => {
         console.error("Auth error:", error);
+        authStarted.current = false;
       });
-  }, [telegram, user, router]);
+  }, [telegram?.initData, user, router, setUser]);
 
   return (
     <main>

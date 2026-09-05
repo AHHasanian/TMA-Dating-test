@@ -2,18 +2,46 @@ import pool from "../db.js";
 
 export const createUser = async (req, res) => {
   try {
-    const { telegram_id, username, first_name, last_name, age } = req.body;
+    const {
+      telegram_id,
+      telegram_username,
+      telegram_first_name,
+      telegram_last_name,
+      telegram_photo_url,
+      telegram_language_code,
+      tma_username,
+      tma_first_name,
+      tma_last_name,
+      tma_photo_url,
+      tma_age,
+      tma_gender,
+      tma_sexual_orientation,
+    } = req.body;
 
+    // Use Telegram values when TMA username/photo are empty
+    const finalTmaUsername = tma_username?.trim() || telegram_username?.trim();
+
+    const finalTmaPhotoUrl =
+      tma_photo_url?.trim() || telegram_photo_url?.trim();
+
+    // Required fields
     if (
       telegram_id === undefined ||
-      username === undefined ||
-      first_name === undefined ||
-      last_name === undefined ||
-      age === undefined
+      !telegram_username?.trim() ||
+      !telegram_first_name?.trim() ||
+      !telegram_last_name?.trim() ||
+      !telegram_photo_url?.trim() ||
+      !telegram_language_code?.trim() ||
+      !finalTmaUsername ||
+      !tma_first_name?.trim() ||
+      !tma_last_name?.trim() ||
+      !finalTmaPhotoUrl ||
+      tma_age === undefined ||
+      tma_age === null
     ) {
       return res.status(400).json({
         success: false,
-        message: "All fields are required",
+        message: "All required fields must be provided",
       });
     }
 
@@ -21,18 +49,43 @@ export const createUser = async (req, res) => {
       `
       INSERT INTO users (
         telegram_id,
-        username,
-        first_name,
-        last_name,
-        age
+        telegram_username,
+        telegram_first_name,
+        telegram_last_name,
+        telegram_photo_url,
+        telegram_language_code,
+        tma_username,
+        tma_first_name,
+        tma_last_name,
+        tma_photo_url,
+        tma_age,
+        tma_gender,
+        tma_sexual_orientation
       )
-      VALUES ($1, $2, $3, $4, $5)
+      VALUES (
+        $1, $2, $3, $4, $5, $6, $7,
+        $8, $9, $10, $11, $12, $13
+      )
       RETURNING *
       `,
-      [telegram_id, username, first_name, last_name, age],
+      [
+        telegram_id,
+        telegram_username.trim(),
+        telegram_first_name.trim(),
+        telegram_last_name.trim(),
+        telegram_photo_url.trim(),
+        telegram_language_code.trim(),
+        finalTmaUsername,
+        tma_first_name.trim(),
+        tma_last_name.trim(),
+        finalTmaPhotoUrl,
+        tma_age,
+        tma_gender?.trim() || null,
+        tma_sexual_orientation?.trim() || null,
+      ],
     );
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
       user: result.rows[0],
     });
@@ -46,7 +99,7 @@ export const createUser = async (req, res) => {
       });
     }
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Failed to create user",
     });
@@ -55,7 +108,7 @@ export const createUser = async (req, res) => {
 
 export const getUsers = async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM users ORDER BY id DESC");
+    const result = await pool.query("SELECT * FROM users ORDER BY tma_id DESC");
 
     res.json({
       success: true,
