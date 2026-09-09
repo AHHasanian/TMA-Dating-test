@@ -19,7 +19,7 @@ export default function SettingsPage() {
           <div className={styles.ListItem__card}>
             <SettingsListItem
               title="Edit Profile"
-              href=" "
+              href="/edit-profile"
               icon="/icons/account-normal.svg"
               subtitle="Name, age, phone number"
             />

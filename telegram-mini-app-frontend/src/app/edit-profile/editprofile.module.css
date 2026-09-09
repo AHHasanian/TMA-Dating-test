@@ -1,0 +1,91 @@
+.profilePhotoSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 166px;
+  width: 100%;
+  margin-top: 20px;
+}
+.profilePhotoWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 112px;
+  width: 112px;
+}
+
+.profilePhoto {
+  background-color: var(--surface-container-lowest);
+  border-radius: var(--radius-full);
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 60px rgba(26, 145, 196, 0.8);
+}
+
+.cameraButton {
+  background: var(--primary-container);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cameraButto__edite {
+  color: var(--surface-container-lowest);
+  width: 15px;
+  height: 15px;
+}
+
+.changePhotoButton {
+  background: none;
+  margin-top: 12px;
+}
+
+.changePhotoButton__text {
+  margin-right: 4px;
+  color: var(--surface-tint);
+  font-size: var(--label-md-size);
+  font-weight: var(--label-md-weight);
+  line-height: var(--label-md-line-height);
+  letter-spacing: var(--label-md-letter-spacing);
+}
+
+.changePhotoButton__edite {
+  width: 12px;
+  height: 12px;
+  color: var(--surface-tint);
+}
+
+.photoDescription {
+  padding-top: 3px;
+  color: var(--secondary);
+  font-size: var(--label-sm-size);
+  font-weight: var(--label-sm-weight);
+  line-height: var(--label-sm-line-height);
+}
+
+.card {
+  margin-top: 24px;
+  background: var(--surface-container-lowest);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 3px rgba(20, 40, 70, 0.02);
+  padding: 19px 16px;
+}
+.cardHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.cardTitle__icon {
+  color: var(--surface-tint);
+  width: 16px;
+  height: 16px;
+}
