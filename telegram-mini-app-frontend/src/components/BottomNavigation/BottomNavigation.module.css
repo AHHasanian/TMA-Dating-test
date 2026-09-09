@@ -26,11 +26,12 @@
   pointer-events: auto;
 }
 .BottomNavigation__item {
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 5px 22px;
+  padding: 5px min(3.5vw, 22px);
 }
 .item__icon {
   width: 15px;

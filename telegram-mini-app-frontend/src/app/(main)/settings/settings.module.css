@@ -1,0 +1,23 @@
+.main_container {
+  padding-bottom: 15vh;
+}
+
+.space {
+  margin-top: 24px;
+}
+
+.ListItem__title {
+  color: var(--secondary);
+  font-size: var(--label-md-size);
+  font-weight: var(--label-md-weight);
+  line-height: var(--label-md-line-height);
+  letter-spacing: var(--label-md-letter-spacing);
+  margin-top: 24px;
+  padding-bottom: 8px;
+}
+
+.ListItem__card {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
