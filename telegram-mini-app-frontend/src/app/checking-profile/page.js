@@ -67,11 +67,9 @@ export default function CheckingProfilePage() {
               </div>
 
               <div className={styles["checking-profile__icon-inner"]}>
-                <img
-                  className={styles["checking-profile__icon-inner-heart"]}
-                  src="/icons/heart.svg"
-                  alt="heart icon"
-                />
+                <svg className={styles["checking-profile__icon-inner-heart"]}>
+                  <use href="/icons/heart.svg" />
+                </svg>
               </div>
             </div>
 

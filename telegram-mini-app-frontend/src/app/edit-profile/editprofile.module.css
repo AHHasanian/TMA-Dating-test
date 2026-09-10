@@ -72,20 +72,300 @@
 }
 
 .card {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+
   margin-top: 24px;
   background: var(--surface-container-lowest);
   border-radius: var(--radius-lg);
   box-shadow: 0 1px 3px rgba(20, 40, 70, 0.02);
   padding: 19px 16px;
 }
+
 .cardHeader {
   display: flex;
-  flex-direction: row;
+  align-items: center;
   justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
 }
 
+.cardTitleWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
 .cardTitle__icon {
   color: var(--surface-tint);
   width: 16px;
   height: 16px;
+}
+
+.cardTitle__text {
+  font-size: var(--body-lg-size);
+  font-weight: var(--headline-sm-weight);
+  line-height: var(--body-lg-line-height);
+}
+
+.verifiedBadge {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: rgb(0, 175, 69, 0.3);
+  color: var(--on-tertiary-container);
+  border-radius: var(--radius-full);
+  font-size: var(--label-sm-size);
+  font-weight: var(--label-sm-weight);
+  line-height: var(--label-sm-line-height);
+  padding: 0px 8px;
+  flex-shrink: 0;
+}
+
+.divider {
+  margin-top: 8px;
+  width: 100%;
+  height: 1px;
+  background: #e7e9ed;
+}
+
+.formGroup {
+  margin-top: 16px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--on-surface-variant);
+  font-size: var(--label-md-size);
+  font-weight: var(--label-md-weight);
+  line-height: var(--label-md-line-height);
+  letter-spacing: var(--label-md-letter-spacing);
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 46px;
+  background: var(--input-bg);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  box-sizing: border-box;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+.input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0 16px;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--on-surface);
+  font-size: var(--body-md-size);
+  font-weight: var(--body-md-weight);
+  line-height: var(--body-md-line-height);
+}
+.usernameIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  padding-left: 16px;
+  color: var(--secondary);
+  font-size: var(--body-md-size);
+  font-weight: var(--body-md-weight);
+  line-height: var(--body-md-line-height);
+}
+
+.focusWrapper:focus-within {
+  border-color: var(--primary-container);
+  background: var(--on-primary);
+}
+
+.ageWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 46px;
+  padding: 0 16px 0 16px;
+  box-sizing: border-box;
+  border-radius: var(--radius-md);
+  background: var(--input-bg);
+}
+
+.ageDescription {
+  color: var(--secondary);
+  font-size: var(--body-md-size);
+  font-weight: var(--body-md-weight);
+  line-height: var(--body-md-line-height);
+}
+
+.ageControls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ageButton {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
+  background: var(--surface-container-lowest);
+  color: var(--on-surface);
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.ageButton:active {
+  transform: scale(1.1);
+}
+
+.ageValue {
+  min-width: 22px;
+  text-align: center;
+  color: var(--on-surface);
+  font-size: var(--body-md-size);
+  font-weight: var(--body-md-weight);
+}
+
+.agePlaceholder {
+  color: #999;
+}
+
+.identityHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.identityHeader__label {
+  color: var(--on-surface-variant);
+  font-size: var(--label-md-size);
+  font-weight: var(--label-md-weight);
+  line-height: var(--label-md-line-height);
+  letter-spacing: var(--label-md-letter-spacing);
+}
+
+.identityHeader__displayLabel {
+  color: var(--secondary);
+  font-size: var(--label-sm-size);
+  font-weight: var(--label-sm-weight);
+  line-height: var(--label-sm-line-height);
+}
+
+.optionsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+.optionButton {
+  height: 32px;
+  margin-top: 8px;
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  background: rgba(237, 241, 245, 90%);
+  color: var(--secondary);
+  font-size: var(--label-md-size);
+  font-weight: var(--label-md-weight);
+  line-height: var(--label-md-line-height);
+  letter-spacing: var(--label-md-letter-spacing);
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.optionButton:active {
+  transform: scale(0.97);
+}
+
+.optionButtonActive {
+  background: var(--primary-container);
+  color: var(--surface-container-lowest);
+}
+
+.bioGroup {
+  width: 100%;
+}
+
+.bioInput {
+  width: 100%;
+  min-height: 100px;
+  margin-top: 6px;
+  padding: 12px;
+  box-sizing: border-box;
+  resize: none;
+  border: 0;
+  outline: none;
+  border-radius: var(--radius-md);
+  background: var(--input-bg);
+  color: var(--on-surface);
+  font-size: var(--body-md-size);
+  font-weight: var(--body-md-weight);
+  line-height: var(--body-md-line-height);
+}
+
+.bioInput::placeholder {
+  color: var(--secondary);
+}
+
+.bioInput:focus-within {
+  border: 1px solid var(--primary-container);
+  background: var(--on-primary);
+}
+
+.bottomSpace {
+  height: 30px;
+  width: 100%;
+}
+
+.saveContainer {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  height: 80px;
+}
+
+.saveButton__Container {
+  height: 60px;
+  background: var(--on-primary);
+  border-radius: var(--radius-lg);
+  padding: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.saveButton {
+  width: 100%;
+  height: 100%;
+  background: var(--primary-container);
+  border-radius: var(--radius-md);
+  color: var(--on-primary);
+  font-size: var(--headline-sm-size);
+  font-weight: var(--headline-sm-weight);
+  line-height: var(--headline-sm-line-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.saveButton__icon {
+  width: 15px;
+  height: 15px;
 }

@@ -20,7 +20,7 @@ export default function BottomNavigation() {
       lable: "Discovery",
       href: "/discovery",
       icon: (
-        <svg>
+        <svg className={styles.BottomNavigation_icon}>
           <use href="/icons/discovery.svg" />
         </svg>
       ),

@@ -55,3 +55,8 @@
   background: rgba(36, 161, 222, 10%);
   border-radius: var(--radius-lg);
 }
+
+.BottomNavigation_icon {
+  width: 18px;
+  height: 18px;
+}

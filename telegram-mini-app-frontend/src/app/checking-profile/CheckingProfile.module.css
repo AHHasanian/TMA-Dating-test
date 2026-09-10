@@ -45,6 +45,7 @@
   transform: translate(-50%, -50%);
   width: 30px;
   height: 30px;
+  color: var(--on-primary-container);
 }
 
 @keyframes checking-profile-spin {
