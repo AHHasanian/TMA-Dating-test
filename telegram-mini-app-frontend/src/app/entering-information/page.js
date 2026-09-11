@@ -203,7 +203,14 @@ export default function EnteringInformationPage() {
                     className={styles["profile-setup__button--primary"]}
                     disabled={loading}
                   >
-                    {loading ? "Creating..." : "Continue"}
+                    {loading ? "Creating..." : "Creat Profile"}
+                  </button>
+
+                  <button
+                    className={styles["profile-setup__button--guest"]}
+                    disabled={loading}
+                  >
+                    Continue as Guest
                   </button>
                 </div>
               </div>
