@@ -1,3 +1,7 @@
+.main_container {
+  padding-bottom: 15vh;
+}
+
 .profile-setup__header {
   display: flex;
   justify-content: center;

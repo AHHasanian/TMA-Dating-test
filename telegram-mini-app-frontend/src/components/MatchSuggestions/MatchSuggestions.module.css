@@ -1,0 +1,251 @@
+.section {
+  width: 100%;
+}
+
+.header {
+  width: 100%;
+  margin-top: 24px;
+  margin-bottom: 6px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.header__icon {
+  width: 20px;
+  height: 20px;
+  color: var(--surface-tint);
+}
+
+.header__text {
+  margin-left: 6px;
+  color: var(--on-surface);
+  font-size: var(--label-md-size);
+  font-weight: var(--label-md-weight);
+  line-height: var(--label-md-line-height);
+  letter-spacing: var(--label-md-letter-spacing);
+}
+
+.header__profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-container-high);
+  border-radius: var(--radius-full);
+  padding: 2px 8px;
+}
+
+.header__profietext {
+  font-size: var(--label-sm-size);
+  font-weight: var(--label-sm-weight);
+  line-height: var(--label-sm-line-height);
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 448px;
+  aspect-ratio: 3 / 3.6;
+}
+
+/* =========================
+   Loading
+========================= */
+
+.loadingCard {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 88%;
+  height: 96%;
+  border-radius: var(--radius-xl);
+  background: var(--surface-container-lowest);
+  box-shadow:
+    0 4px 12px rgba(26, 27, 31, 0.08),
+    0 1px 3px rgba(26, 27, 31, 0.04);
+  overflow: hidden;
+  z-index: 3;
+  transform: translateX(-50%);
+}
+
+/* Card behind - 1 */
+.cardBack1 {
+  z-index: 2;
+  width: 80%;
+  height: 98%;
+  transform: translateX(-40%) translateY(15px) scale(0.97);
+  background: var(--surface-container);
+  box-shadow:
+    0 4px 10px rgba(26, 27, 31, 0.06),
+    0 1px 3px rgba(26, 27, 31, 0.03);
+}
+
+/* Card behind - 2 */
+.cardBack2 {
+  z-index: 1;
+  width: 80%;
+  height: 95%;
+  transform: translateX(-61%) translateY(-20px) scale(0.94);
+  background: var(--surface-container-high);
+  box-shadow:
+    0 3px 8px rgba(26, 27, 31, 0.05),
+    0 1px 2px rgba(26, 27, 31, 0.03);
+}
+
+/* =========================
+   Loading Profile Info
+========================= */
+
+.loadingInfo {
+  position: absolute;
+
+  left: 24px;
+  right: 24px;
+  bottom: 40px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+
+  z-index: 4;
+}
+
+.loadingLine {
+  height: 12px;
+
+  border-radius: var(--radius-full);
+
+  background: var(--surface-container-high);
+
+  animation: loadingPulse 1.8s ease-in-out infinite;
+}
+
+.loadingLineLarge {
+  width: 65%;
+  height: 18px;
+
+  background: var(--surface-container-highest);
+}
+
+.loadingLineMedium {
+  width: 45%;
+}
+
+.loadingLineSmall {
+  width: 80%;
+
+  background: var(--surface-container);
+}
+
+/* =========================
+   Loading Buttons
+========================= */
+
+.loadingButtons {
+  position: absolute;
+  right: 24px;
+  bottom: 60px;
+  display: flex;
+  gap: 10px;
+  z-index: 4;
+}
+
+.loadingButton {
+  width: 48px;
+  height: 48px;
+
+  border-radius: var(--radius-full);
+
+  background: var(--surface-container-highest);
+
+  animation: loadingPulse 1.8s ease-in-out infinite;
+}
+
+/* =========================
+   Animation
+========================= */
+
+@keyframes loadingPulse {
+  0% {
+    opacity: 0.55;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.55;
+  }
+}
+/* =========================
+   Empty State
+========================= */
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 448px;
+  aspect-ratio: 3 / 3.6;
+  padding: 2rem;
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-xl);
+  text-align: center;
+}
+
+.emptyIcon {
+  margin-bottom: 20px;
+  font-size: 60px;
+}
+
+.emptyTitle {
+  margin-bottom: 5px;
+  font-size: var(--headline-sm-size);
+  font-weight: var(--headline-sm-weight);
+  line-height: var(--headline-sm-line-height);
+  color: var(--primary);
+}
+
+.emptyDescription {
+  padding-bottom: 30px;
+  font-size: var(--label-md-size);
+  font-weight: var(--label-md-weight);
+  line-height: var(--label-md-line-height);
+  color: var(--on-surface-variant);
+}
+
+.exploreButton {
+  padding: 8px 40px;
+  border: none;
+  background: var(--on-primary-container);
+  border-radius: var(--radius-md);
+  color: var(--on-primary);
+  font-size: var(--body-md-size);
+  font-weight: var(--body-md-weight);
+  line-height: var(--body-md-line-height);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.exploreButton:hover {
+  background: var(--primary-container);
+}
+
+.exploreButton:active {
+  transform: scale(0.95);
+}

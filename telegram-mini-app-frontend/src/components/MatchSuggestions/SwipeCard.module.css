@@ -1,0 +1,399 @@
+.cardWrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* =========================
+   Top Card
+========================= */
+
+.cardTop {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 88%;
+  height: 96%;
+  z-index: 3;
+  transform: translateX(-50%);
+  border-radius: var(--radius-xl);
+
+  box-shadow:
+    0 4px 12px rgba(26, 27, 31, 0.08),
+    0 1px 3px rgba(26, 27, 31, 0.04);
+}
+
+/* =========================
+   Card Back 1
+========================= */
+
+.cardBack1 {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 80%;
+  height: 98%;
+  z-index: 2;
+  transform: translateX(-40%) translateY(15px) scale(0.97);
+  border-radius: var(--radius-xl);
+
+  box-shadow:
+    0 4px 10px rgba(26, 27, 31, 0.06),
+    0 1px 3px rgba(26, 27, 31, 0.03);
+}
+
+/* =========================
+   Card Back 2
+========================= */
+
+.cardBack2 {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 80%;
+  height: 95%;
+  z-index: 1;
+  transform: translateX(-60%) translateY(-10px) scale(0.94);
+  border-radius: var(--radius-xl);
+
+  box-shadow:
+    0 3px 8px rgba(26, 27, 31, 0.05),
+    0 1px 2px rgba(26, 27, 31, 0.03);
+}
+
+/* =========================
+   Actual Card
+========================= */
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  background: var(--surface-container-lowest);
+}
+
+/* =========================
+   Image
+========================= */
+
+.profileImage {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  user-select: none;
+}
+
+.imageOverlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85),
+    rgba(0, 0, 0, 0.1),
+    rgba(0, 0, 0, 0.2)
+  );
+}
+
+/* =========================
+   Compatibility
+========================= */
+
+.compatibilityBadge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+  padding: 4px 10px;
+
+  border-radius: var(--radius-full);
+  background: rgba(0, 0, 0, 0.5);
+
+  backdrop-filter: blur(4px);
+}
+
+.powerIcon {
+  width: 13px;
+  height: 13px;
+  color: var(--tertiary-container);
+}
+
+.compatibilityText {
+  color: var(--on-primary);
+  font-size: var(--label-sm-size);
+  line-height: var(--label-sm-line-height);
+  font-weight: var(--label-sm-weight);
+}
+
+/* =========================
+   NEW badge
+========================= */
+
+.newBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  padding: 4px 10px;
+
+  border-radius: var(--radius-full);
+
+  background: var(--surface-tint);
+  color: var(--on-primary);
+
+  font-size: var(--label-sm-size);
+  line-height: var(--label-sm-line-height);
+  font-weight: var(--label-sm-weight);
+}
+
+/* =========================
+   Swipe stamps
+========================= */
+
+.swipeStamp {
+  position: absolute;
+  top: 33.333333%;
+
+  padding: 4px 16px;
+
+  border-width: 4px;
+  border-style: solid;
+  border-radius: var(--radius-sm);
+
+  pointer-events: none;
+
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 800;
+  letter-spacing: 0.025em;
+}
+
+.likeStamp {
+  right: 24px;
+
+  transform: rotate(-12deg);
+
+  border-color: var(--tertiary-container);
+  color: var(--tertiary-container);
+}
+
+.passStamp {
+  left: 24px;
+
+  transform: rotate(12deg);
+
+  border-color: #fb7185;
+  color: #fb7185;
+}
+
+/* =========================
+   Heart feedback
+========================= */
+
+.heartFeedback {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none;
+}
+
+.bigHeart {
+  width: 112px;
+  height: 112px;
+
+  fill: #f43f5e;
+  color: #f43f5e;
+
+  filter: drop-shadow(0 10px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* =========================
+   Profile info
+========================= */
+
+.profileInfo {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  padding: 16px;
+}
+
+.profileHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+  margin-bottom: 6px;
+}
+.profileDetiles {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  width: 100%;
+}
+
+.nameWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.profileName {
+  margin: 0;
+
+  color: var(--on-primary);
+
+  font-size: var(--headline-md-size);
+  line-height: var(--headline-md-line-height);
+  font-weight: var(--headline-md-weight);
+  letter-spacing: var(--headline-md-letter-spacing);
+}
+
+.verifiedIcon {
+  width: 20px;
+  height: 20px;
+
+  fill: var(--primary-container);
+  color: var(--primary-container);
+
+  flex-shrink: 0;
+}
+
+/* =========================
+   Action buttons
+========================= */
+
+.actionButtons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  flex-shrink: 0;
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 44px;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  color: var(--on-primary);
+
+  cursor: pointer;
+
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.25);
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+.actionButton:active {
+  transform: scale(0.9);
+}
+
+.actionButton:disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
+.passButton {
+  background: rgba(51, 65, 85, 0.5);
+}
+
+.likeButton {
+  background: #f43f5e;
+}
+
+.likeButtonActive {
+  box-shadow: 0 0 0 4px rgba(251, 113, 133, 0.5);
+}
+
+.buttonIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.likeButton .buttonIcon {
+  fill: var(--surface-container-lowest);
+}
+
+/* =========================
+   Meta information
+========================= */
+
+.metaInfo {
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+  margin-bottom: 6px;
+
+  color: #e2e8f0;
+
+  font-size: var(--label-md-size);
+  font-weight: var(--label-md-weight);
+  line-height: var(--label-md-line-height);
+}
+
+.distance {
+  display: flex;
+  align-items: center;
+
+  gap: 2px;
+}
+
+.mapIcon {
+  color: var(--surface-container-lowest);
+
+  width: 13px;
+  height: 13px;
+}
+
+/* =========================
+   Bio
+========================= */
+
+.bio {
+  display: -webkit-box;
+
+  margin: 0 0 8px;
+
+  overflow: hidden;
+
+  color: #e2e8f0;
+
+  font-size: var(--label-md-size);
+  font-weight: var(--label-md-weight);
+  line-height: var(--label-md-line-height);
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}

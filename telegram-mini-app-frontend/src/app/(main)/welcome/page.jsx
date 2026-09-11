@@ -4,10 +4,13 @@ import styles from "./Welcome.module.css";
 import { useAuth } from "@/context/AuthContext";
 import Cardprofile from "@/components/cardProfile/cardProfile";
 
+import { MatchSuggestions } from "@/components/MatchSuggestions/MatchSuggestions";
+import mockProfiles from "@/data/mockProfiles";
+
 export default function Welcome() {
   const { user, loading } = useAuth();
   return (
-    <main className={styles["welcome"]}>
+    <main className={styles.main_container}>
       <div className="container">
         <header className={styles["profile-setup__header"]}>
           <h1 className={styles["profile-setup__header-title"]}>Welcome</h1>
@@ -23,6 +26,13 @@ export default function Welcome() {
         </div>
         {/* Main Content */}
         <Cardprofile />
+        <MatchSuggestions
+          profiles={mockProfiles}
+          onLike={(profile) => console.log("liked", profile.id)}
+          onPass={(profile) => console.log("passed", profile.id)}
+          onEmpty={() => console.log("deck finished")}
+          onExploreMore={() => console.log("fetch more profiles")}
+        />
       </div>
     </main>
   );
