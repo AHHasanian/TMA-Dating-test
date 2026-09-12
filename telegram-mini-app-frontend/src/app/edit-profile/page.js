@@ -1,53 +1,88 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./editprofile.module.css";
 import Headercomponent from "@/components/header/header";
+import { useAuth } from "@/context/AuthContext";
 
 export default function EditProfile() {
+  const { user, loading } = useAuth();
+
+  const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [age, setAge] = useState("");
-  const [gender, setGender] = useState("Male");
-  const [sexualOrientation, setSexualOrientation] = useState("Straight");
+  const [gender, setGender] = useState("");
+  const [sexualOrientation, setSexualOrientation] = useState("");
+  const [photoUrl, setPhotoUrl] = useState("/icons/account.svg");
+
+  // Load user data from AuthContext
+  useEffect(() => {
+    if (!user) return;
+
+    setUsername(user.tma_username || "");
+    setFirstName(user.tma_first_name || "");
+    setLastName(user.tma_last_name || "");
+    setAge(user.tma_age?.toString() || "");
+    setGender(user.tma_gender || "");
+    setSexualOrientation(user.tma_sexual_orientation || "");
+    setPhotoUrl(user.tma_photo_url || "/icons/account.svg");
+  }, [user]);
+
+  if (loading) {
+    return null;
+  }
+
   return (
     <main>
       <div className="container">
         <Headercomponent title="Edit Profile" showBack rightIcon />
+
         <section className={styles.profilePhotoSection}>
           <div className={styles.profilePhotoWrapper}>
-            <svg className={styles.profilePhoto}>
-              <use href="/icons/account.svg" />
-            </svg>
+            <img src={photoUrl} alt="Profile" className={styles.profilePhoto} />
+
             <button type="button" className={styles.cameraButton}>
               <svg className={styles.cameraButto__edite}>
                 <use href="/icons/camera.svg" />
               </svg>
             </button>
           </div>
+
           <button type="button" className={styles.changePhotoButton}>
             <span className={styles.changePhotoButton__text}>
               Change Profile Photo
             </span>
+
             <svg className={styles.changePhotoButton__edite}>
               <use href="/icons/note.svg" />
             </svg>
           </button>
+
           <p className={styles.photoDescription}>
             Visible to potential matches
           </p>
         </section>
+
         <section className={styles.info}>
           <form>
+            {/* Basic Info */}
             <div className={styles.card}>
               <div className={styles.cardHeader}>
                 <div className={styles.cardTitleWrapper}>
                   <svg className={styles.cardTitle__icon}>
                     <use href="/icons/Basic Info.svg" />
                   </svg>
+
                   <h2 className={styles.cardTitle__text}>Basic Info</h2>
                 </div>
+
                 <span className={styles.verifiedBadge}>Verified</span>
               </div>
+
               <div className={styles.divider}></div>
+
+              {/* Username */}
               <div className={styles.formGroup}>
                 <label className={styles.label} htmlFor="usernameInput">
                   Username
@@ -63,15 +98,18 @@ export default function EditProfile() {
                     id="usernameInput"
                     placeholder="e.g. alex_123"
                     className={styles.input}
+                    value={username}
+                    onChange={(event) => setUsername(event.target.value)}
                   />
                 </div>
               </div>
-              {/* First Name / Last Name */}
 
+              {/* First Name */}
               <div className={styles.formGroup}>
                 <label className={styles.label} htmlFor="firstNameInput">
                   First Name
                 </label>
+
                 <div
                   className={`${styles.inputWrapper} ${styles.focusWrapper}`}
                 >
@@ -80,14 +118,18 @@ export default function EditProfile() {
                     id="firstNameInput"
                     placeholder="e.g. Alex"
                     className={styles.input}
+                    value={firstName}
+                    onChange={(event) => setFirstName(event.target.value)}
                   />
                 </div>
               </div>
 
+              {/* Last Name */}
               <div className={styles.formGroup}>
                 <label className={styles.label} htmlFor="lastNameInput">
                   Last Name
                 </label>
+
                 <div
                   className={`${styles.inputWrapper} ${styles.focusWrapper}`}
                 >
@@ -96,6 +138,8 @@ export default function EditProfile() {
                     id="lastNameInput"
                     placeholder="e.g. Smith"
                     className={styles.input}
+                    value={lastName}
+                    onChange={(event) => setLastName(event.target.value)}
                   />
                 </div>
               </div>
@@ -114,10 +158,11 @@ export default function EditProfile() {
                       aria-label="Decrease age"
                       onClick={() => {
                         setAge((currentAge) => {
-                          if (currentAge === "") return 1;
+                          if (currentAge === "") return "1";
 
                           const newAge = Number(currentAge) - 1;
-                          return newAge >= 1 ? newAge : 1;
+
+                          return newAge >= 1 ? newAge.toString() : "1";
                         });
                       }}
                     >
@@ -138,10 +183,11 @@ export default function EditProfile() {
                       aria-label="Increase age"
                       onClick={() => {
                         setAge((currentAge) => {
-                          if (currentAge === "") return 1;
+                          if (currentAge === "") return "1";
 
                           const newAge = Number(currentAge) + 1;
-                          return newAge <= 100 ? newAge : 100;
+
+                          return newAge <= 100 ? newAge.toString() : "100";
                         });
                       }}
                     >
@@ -151,16 +197,22 @@ export default function EditProfile() {
                 </div>
               </div>
             </div>
+
+            {/* Match Identity */}
             <div className={styles.card}>
               <div className={styles.cardHeader}>
                 <div className={styles.cardTitleWrapper}>
                   <svg className={styles.cardTitle__icon}>
                     <use href="/icons/heart.svg" />
                   </svg>
+
                   <h2 className={styles.cardTitle__text}>Match Identity</h2>
                 </div>
               </div>
+
               <div className={styles.divider}></div>
+
+              {/* Gender */}
               <div className={styles.identityHeader}>
                 <label className={styles.identityHeader__label}>Gender</label>
 
@@ -183,6 +235,8 @@ export default function EditProfile() {
                   </button>
                 ))}
               </div>
+
+              {/* Sexual Orientation */}
               <div className={styles.identityHeader}>
                 <label className={styles.identityHeader__label}>
                   Sexual Orientation
@@ -205,6 +259,8 @@ export default function EditProfile() {
                   </button>
                 ))}
               </div>
+
+              {/* Bio - فعلاً دست نخورده نگه داشته شده */}
               <div className={styles.bioGroup}>
                 <div className={styles.identityHeader}>
                   <label className={styles.identityHeader__label}>Bio</label>
@@ -222,13 +278,17 @@ export default function EditProfile() {
                 />
               </div>
             </div>
-            <div className={styles.bottomSpace}> </div>
+
+            <div className={styles.bottomSpace}></div>
+
+            {/* Save */}
             <div className={styles.saveContainer}>
               <div className={styles.saveButton__Container}>
                 <button type="button" className={styles.saveButton}>
                   <svg className={styles.saveButton__icon}>
                     <use href="/icons/save.svg" />
                   </svg>
+
                   <span>Save Changes</span>
                 </button>
               </div>

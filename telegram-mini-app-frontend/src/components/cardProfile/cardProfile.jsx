@@ -1,16 +1,32 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import styles from "./cardProfile.module.css";
 
 export default function Cardprofile() {
   const { user, loading } = useAuth();
+
+  const [photoUrl, setPhotoUrl] = useState("/icons/account.svg");
+
+  useEffect(() => {
+    if (!user) return;
+
+    setPhotoUrl(user.tma_photo_url || "/icons/account.svg");
+  }, [user]);
+
+  if (loading) {
+    return null;
+  }
+
   return (
     <div className={styles["welcome__profilet-card"]}>
       <div className={styles["welcome__profilet-avatar"]}>
-        <svg className={styles["welcome__avatar-svg"]}>
-          <use href={user?.tma_photo_url || "/icons/account.svg"} />
-        </svg>
+        <img
+          src={photoUrl}
+          alt="Profile"
+          className={styles["welcome__avatar-svg"]}
+        />
       </div>
 
       <div className={styles["welcome__profilet-info"]}>
