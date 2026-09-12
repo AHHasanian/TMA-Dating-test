@@ -1,41 +1,96 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SwipeCard } from "./SwipeCard";
 import styles from "./MatchSuggestions.module.css";
+
+import { getMatchSuggestions, likeMatch, dislikeMatch } from "@/services/api";
 
 const VISIBLE_STACK = 3;
 
 export function MatchSuggestions({
-  profiles,
-  loading = false,
-  onLike,
-  onPass,
+  telegramId,
   onEmpty,
   onExploreMore,
   className = "",
 }) {
-  const [deck, setDeck] = useState(profiles);
+  const [deck, setDeck] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const handleSwipe = (direction) => {
-    setDeck((prev) => {
-      const [current, ...rest] = prev;
+  useEffect(() => {
+    const loadMatches = async () => {
+      if (!telegramId) {
+        setLoading(false);
+        return;
+      }
 
-      if (!current) return prev;
+      try {
+        setLoading(true);
+        setError(null);
 
+        const data = await getMatchSuggestions(telegramId);
+
+        const mappedProfiles = data.matches.map((user) => ({
+          id: user.telegram_id,
+          name: user.tma_first_name,
+          age: user.tma_age,
+          photoUrl: user.tma_photo_url,
+          username: user.tma_username,
+          gender: user.tma_gender,
+          sexualOrientation: user.tma_sexual_orientation,
+
+          // فعلاً Backend این اطلاعات را ارسال نمی‌کند
+          compatibility: null,
+          verified: false,
+          isNew: false,
+          distanceKm: undefined,
+          occupation: undefined,
+          bio: undefined,
+        }));
+
+        setDeck(mappedProfiles);
+      } catch (error) {
+        console.error("Failed to load matches:", error);
+        setError("Unable to load suggestions");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadMatches();
+  }, [telegramId]);
+
+  const handleSwipe = async (direction) => {
+    const current = deck[0];
+
+    if (!current || !telegramId) {
+      return;
+    }
+
+    // فعلاً کارت را از UI حذف می‌کنیم
+    setDeck((prev) => prev.slice(1));
+
+    try {
       if (direction === "right") {
-        onLike?.(current);
+        await likeMatch(telegramId, current.id);
       } else {
-        onPass?.(current);
+        await dislikeMatch(telegramId, current.id);
       }
+    } catch (error) {
+      console.error("Failed to save interaction:", error);
 
-      if (rest.length === 0) {
-        onEmpty?.();
-      }
-
-      return rest;
-    });
+      // اگر Backend خطا داد،
+      // کارت را دوباره به ابتدای Deck برمی‌گردانیم.
+      setDeck((prev) => [current, ...prev]);
+    }
   };
+
+  useEffect(() => {
+    if (!loading && !error && deck.length === 0) {
+      onEmpty?.();
+    }
+  }, [deck.length, loading, error, onEmpty]);
 
   return (
     <section className={`${styles.section} ${className}`}>
@@ -45,12 +100,13 @@ export function MatchSuggestions({
           <svg className={styles.header__icon}>
             <use href="/icons/hot.svg" />
           </svg>
+
           <h2 className={styles.header__text}>Today's Suggestions</h2>
         </div>
 
         <div className={styles.header__profile}>
           <span className={styles.header__profietext}>
-            {profiles.length} profiles
+            {deck.length} profiles
           </span>
         </div>
       </header>
@@ -58,24 +114,25 @@ export function MatchSuggestions({
       {/* Loading */}
       {loading && (
         <div className={styles.container}>
-          {/* Card stack */}
           <div className={`${styles.loadingCard} ${styles.cardBack2}`} />
+
           <div className={`${styles.loadingCard} ${styles.cardBack1}`} />
+
           <div className={styles.loadingCard}>
-            {/* Profile information */}
             <div className={styles.loadingInfo}>
               <div
                 className={`${styles.loadingLine} ${styles.loadingLineLarge}`}
               />
+
               <div
                 className={`${styles.loadingLine} ${styles.loadingLineMedium}`}
               />
+
               <div
                 className={`${styles.loadingLine} ${styles.loadingLineSmall}`}
               />
             </div>
 
-            {/* Action buttons */}
             <div className={styles.loadingButtons}>
               <div className={styles.loadingButton} />
               <div className={styles.loadingButton} />
@@ -84,8 +141,19 @@ export function MatchSuggestions({
         </div>
       )}
 
+      {/* Error */}
+      {!loading && error && (
+        <div className={styles.emptyState}>
+          <div className={styles.emptyIcon}>⚠️</div>
+
+          <h3 className={styles.emptyTitle}>Something went wrong</h3>
+
+          <p className={styles.emptyDescription}>{error}</p>
+        </div>
+      )}
+
       {/* Empty */}
-      {!loading && deck.length === 0 && (
+      {!loading && !error && deck.length === 0 && (
         <div className={styles.emptyState}>
           <div className={styles.emptyIcon}>💔</div>
 
@@ -106,7 +174,7 @@ export function MatchSuggestions({
       )}
 
       {/* Cards */}
-      {!loading && deck.length > 0 && (
+      {!loading && !error && deck.length > 0 && (
         <div className={styles.container}>
           {[...deck.slice(0, VISIBLE_STACK)].reverse().map((profile, i) => {
             const visible = deck.slice(0, VISIBLE_STACK);

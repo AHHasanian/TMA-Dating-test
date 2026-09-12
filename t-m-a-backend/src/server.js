@@ -7,6 +7,7 @@ import healthRoutes from "./routes/health.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import apiRoutes from "./routes/api.routes.js";
 import authRoutes from "./routes/auth.routes.js";
+import matchRoutes from "./routes/match.routes.js";
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use("/api", apiRoutes);
 app.use("/api/health", healthRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/matches", matchRoutes);
 // Start server
 app.listen(PORT, () => {
   console.log(`Backend running on http://localhost:${PORT}`);

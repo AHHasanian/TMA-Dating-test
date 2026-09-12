@@ -28,6 +28,18 @@ const apiEndpoints = [
     path: "/api/auth/telegram",
   },
   {
+    method: "POST",
+    path: "/api/matches/:telegram_id",
+  },
+  {
+    method: "POST",
+    path: "/api/matches/:telegram_id/like",
+  },
+  {
+    method: "POST",
+    path: "/api/matches/:telegram_id/dislike",
+  },
+  {
     method: "PATCH",
     path: "/api/users/telegram/:telegram_id",
   },
