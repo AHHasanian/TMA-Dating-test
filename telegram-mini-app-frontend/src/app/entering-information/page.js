@@ -19,7 +19,8 @@ export default function EnteringInformationPage() {
     age: "",
   });
 
-  const [loading, setLoading] = useState(false);
+  const [isCreatingProfile, setIsCreatingProfile] = useState(false);
+  const [isGuestLoading, setIsGuestLoading] = useState(false);
   const [error, setError] = useState("");
 
   const handleChange = (event) => {
@@ -35,7 +36,7 @@ export default function EnteringInformationPage() {
     event.preventDefault();
 
     setError("");
-    setLoading(true);
+    setIsCreatingProfile(true);
 
     try {
       const telegramUser = telegram?.initDataUnsafe?.user;
@@ -94,10 +95,55 @@ export default function EnteringInformationPage() {
       console.error("Create user error:", error);
       setError(error.message || "Something went wrong");
     } finally {
-      setLoading(false);
+      setIsCreatingProfile(false);
     }
   };
+  const handleGuest = async () => {
+    setError("");
+    setIsGuestLoading(true);
 
+    try {
+      const telegramUser = telegram?.initDataUnsafe?.user;
+
+      if (!telegramUser?.id) {
+        throw new Error("Telegram user information is not available");
+      }
+
+      const data = await createUser({
+        telegram_id: telegramUser.id,
+        telegram_username: telegramUser.username,
+        telegram_first_name: telegramUser.first_name,
+        telegram_last_name: telegramUser.last_name,
+        telegram_photo_url: telegramUser.photo_url,
+        telegram_language_code: telegramUser.language_code,
+
+        // Default guest values
+        tma_username: "guest",
+        tma_first_name: "Guest",
+        tma_last_name: "User",
+        tma_photo_url: "/icons/account.svg",
+        tma_age: 18,
+
+        tma_gender: null,
+        tma_sexual_orientation: null,
+      });
+
+      console.log("Guest user response:", data);
+
+      if (!data.success) {
+        throw new Error(data.message || "Failed to create guest user");
+      }
+
+      setUser(data.user);
+
+      router.push("/creating-profile");
+    } catch (error) {
+      console.error("Create guest user error:", error);
+      setError(error.message || "Something went wrong");
+    } finally {
+      setIsGuestLoading(false);
+    }
+  };
   return (
     <main>
       <div className="container">
@@ -201,16 +247,18 @@ export default function EnteringInformationPage() {
                   <button
                     type="submit"
                     className={styles["profile-setup__button--primary"]}
-                    disabled={loading}
+                    disabled={isCreatingProfile || isGuestLoading}
                   >
-                    {loading ? "Creating..." : "Creat Profile"}
+                    {isCreatingProfile ? "Creating..." : "Create Profile"}
                   </button>
 
                   <button
+                    type="button"
                     className={styles["profile-setup__button--guest"]}
-                    disabled={loading}
+                    onClick={handleGuest}
+                    disabled={isCreatingProfile || isGuestLoading}
                   >
-                    Continue as Guest
+                    {isGuestLoading ? "Creating..." : "Continue as Guest"}
                   </button>
                 </div>
               </div>

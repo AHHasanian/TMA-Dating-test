@@ -42,3 +42,7 @@
   font-weight: var(--headline-sm-weight);
   line-height: var(--headline-sm-line-height);
 }
+
+.container__button {
+  background: transparent;
+}
