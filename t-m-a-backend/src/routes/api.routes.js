@@ -27,6 +27,10 @@ const apiEndpoints = [
     method: "POST",
     path: "/api/auth/telegram",
   },
+  {
+    method: "PATCH",
+    path: "/api/users/telegram/:telegram_id",
+  },
 ];
 
 router.get("/", (req, res) => {
@@ -118,6 +122,11 @@ router.get("/", (req, res) => {
 
           .post {
             background: #1d4ed8;
+            color: #ffffff;
+          }
+
+          .patch {
+            background: orange;
             color: #ffffff;
           }
             

@@ -364,8 +364,22 @@
   align-items: center;
   justify-content: center;
   gap: 5px;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
 }
 .saveButton__icon {
   width: 15px;
   height: 15px;
+}
+
+.saveButtonSuccess {
+  background: var(--tertiary);
+  border-color: var(--tertiary);
+  color: var(--on-tertiary);
+}
+
+.hiddenFileInput {
+  display: none;
 }

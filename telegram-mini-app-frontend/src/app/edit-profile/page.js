@@ -4,9 +4,14 @@ import { useEffect, useState } from "react";
 import styles from "./editprofile.module.css";
 import Headercomponent from "@/components/header/header";
 import { useAuth } from "@/context/AuthContext";
+import { updateUser } from "@/services/api";
 
 export default function EditProfile() {
-  const { user, loading } = useAuth();
+  const { user, loading, setUser } = useAuth();
+
+  const [saving, setSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [error, setError] = useState("");
 
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -15,6 +20,8 @@ export default function EditProfile() {
   const [gender, setGender] = useState("");
   const [sexualOrientation, setSexualOrientation] = useState("");
   const [photoUrl, setPhotoUrl] = useState("/icons/account.svg");
+
+  const [photoFile, setPhotoFile] = useState(null);
 
   // Load user data from AuthContext
   useEffect(() => {
@@ -33,6 +40,72 @@ export default function EditProfile() {
     return null;
   }
 
+  const handleSave = async () => {
+    if (!user?.telegram_id) {
+      setError("User Telegram ID not found.");
+      return;
+    }
+
+    setSaving(true);
+    setSaveSuccess(false);
+    setError("");
+
+    try {
+      let finalPhotoUrl = photoUrl;
+
+      if (photoFile) {
+        finalPhotoUrl = await fileToBase64(photoFile);
+      }
+
+      const data = await updateUser(user.telegram_id, {
+        tma_username: username,
+        tma_first_name: firstName,
+        tma_last_name: lastName,
+        tma_age: Number(age),
+        tma_gender: gender || null,
+        tma_sexual_orientation: sexualOrientation || null,
+        tma_photo_url: finalPhotoUrl,
+      });
+
+      setUser(data.user);
+
+      setPhotoFile(null);
+
+      setSaveSuccess(true);
+
+      setTimeout(() => {
+        setSaveSuccess(false);
+      }, 3000);
+    } catch (error) {
+      console.error("Save profile error:", error);
+      setError(error.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handlePhotoChange = (event) => {
+    const file = event.target.files?.[0];
+
+    if (!file) return;
+
+    setPhotoFile(file);
+
+    const previewUrl = URL.createObjectURL(file);
+    setPhotoUrl(previewUrl);
+  };
+
+  const fileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.readAsDataURL(file);
+
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
   return (
     <main>
       <div className="container">
@@ -42,14 +115,32 @@ export default function EditProfile() {
           <div className={styles.profilePhotoWrapper}>
             <img src={photoUrl} alt="Profile" className={styles.profilePhoto} />
 
-            <button type="button" className={styles.cameraButton}>
+            <button
+              type="button"
+              className={styles.cameraButton}
+              onClick={() =>
+                document.getElementById("profilePhotoInput")?.click()
+              }
+            >
               <svg className={styles.cameraButto__edite}>
                 <use href="/icons/camera.svg" />
               </svg>
             </button>
           </div>
-
-          <button type="button" className={styles.changePhotoButton}>
+          <input
+            type="file"
+            accept="image/*"
+            id="profilePhotoInput"
+            className={styles.hiddenFileInput}
+            onChange={handlePhotoChange}
+          />
+          <button
+            type="button"
+            className={styles.changePhotoButton}
+            onClick={() =>
+              document.getElementById("profilePhotoInput")?.click()
+            }
+          >
             <span className={styles.changePhotoButton__text}>
               Change Profile Photo
             </span>
@@ -284,12 +375,27 @@ export default function EditProfile() {
             {/* Save */}
             <div className={styles.saveContainer}>
               <div className={styles.saveButton__Container}>
-                <button type="button" className={styles.saveButton}>
+                <button
+                  type="button"
+                  className={`${styles.saveButton} ${
+                    saveSuccess ? styles.saveButtonSuccess : ""
+                  }`}
+                  onClick={handleSave}
+                  disabled={saving}
+                >
                   <svg className={styles.saveButton__icon}>
-                    <use href="/icons/save.svg" />
+                    <use
+                      href={`/icons/${saveSuccess ? "check.svg" : "save.svg"}`}
+                    />
                   </svg>
 
-                  <span>Save Changes</span>
+                  <span>
+                    {saving
+                      ? "Saving..."
+                      : saveSuccess
+                        ? "Saved Successfully"
+                        : "Save Changes"}
+                  </span>
                 </button>
               </div>
             </div>

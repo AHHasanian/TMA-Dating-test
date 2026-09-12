@@ -37,3 +37,10 @@ export function createUser(userData) {
     body: JSON.stringify(userData),
   });
 }
+
+export function updateUser(telegramId, userData) {
+  return request(`/api/users/telegram/${telegramId}`, {
+    method: "PATCH",
+    body: JSON.stringify(userData),
+  });
+}

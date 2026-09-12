@@ -155,3 +155,66 @@ export const getUserByTelegramId = async (req, res) => {
     });
   }
 };
+
+export const updateUserByTelegramId = async (req, res) => {
+  try {
+    const { telegram_id } = req.params;
+
+    const {
+      tma_username,
+      tma_first_name,
+      tma_last_name,
+      tma_age,
+      tma_gender,
+      tma_sexual_orientation,
+      tma_photo_url,
+    } = req.body;
+
+    const result = await pool.query(
+      `
+      UPDATE users
+      SET
+        tma_username = COALESCE($1, tma_username),
+        tma_first_name = COALESCE($2, tma_first_name),
+        tma_last_name = COALESCE($3, tma_last_name),
+        tma_age = COALESCE($4, tma_age),
+        tma_gender = $5,
+        tma_sexual_orientation = $6,
+        tma_photo_url = COALESCE($7, tma_photo_url),
+        tma_updated_at = CURRENT_TIMESTAMP
+      WHERE telegram_id = $8
+      RETURNING *
+      `,
+      [
+        tma_username?.trim(),
+        tma_first_name?.trim(),
+        tma_last_name?.trim(),
+        tma_age,
+        tma_gender?.trim() || null,
+        tma_sexual_orientation?.trim() || null,
+        tma_photo_url?.trim(),
+        telegram_id,
+      ],
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    return res.json({
+      success: true,
+      message: "User profile updated successfully",
+      user: result.rows[0],
+    });
+  } catch (error) {
+    console.error("Update user error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to update user",
+    });
+  }
+};
