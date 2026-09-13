@@ -111,12 +111,14 @@ export function SwipeCard({ profile, isTop, stackIndex, onSwipe }) {
             </span>
 
             <span className={styles.compatibilityText}>
+              {/* {profile.compatibility}% Compatibility */}
               {profile.compatibility}% Compatibility
             </span>
           </div>
 
           {/* NEW */}
-          {profile.isNew && <div className={styles.newBadge}>NEW</div>}
+          {/* {profile.isNew && <div className={styles.newBadge}>NEW</div>} */}
+          <div className={styles.newBadge}>NEW</div>
 
           {/* Heart animation */}
           {justLiked && (
@@ -157,20 +159,21 @@ export function SwipeCard({ profile, isTop, stackIndex, onSwipe }) {
                 </div>
 
                 {/* Distance / occupation */}
-                {(profile.distanceKm !== undefined || profile.occupation) && (
-                  <div className={styles.metaInfo}>
-                    {profile.distanceKm !== undefined && (
-                      <span className={styles.distance}>
-                        <svg className={styles.mapIcon}>
-                          <use href="/icons/navigation.svg" />
-                        </svg>
-                        {profile.distanceKm} km away
-                      </span>
-                    )}
+                {/* {(profile.distanceKm !== undefined || profile.occupation) && ( */}
+                <div className={styles.metaInfo}>
+                  {/* {profile.distanceKm !== undefined && ( */}
+                  <span className={styles.distance}>
+                    <svg className={styles.mapIcon}>
+                      <use href="/icons/navigation.svg" />
+                    </svg>
+                    {/* {profile.distanceKm} km  */}3 km
+                  </span>
+                  {/* )} */}
 
-                    {profile.occupation && <span>· {profile.occupation}</span>}
-                  </div>
-                )}
+                  {/* {profile.occupation && <span>· {profile.occupation}</span>} */}
+                  <span>· Urban Architect</span>
+                </div>
+                {/* )} */}
               </div>
 
               {/* Buttons */}
@@ -204,7 +207,12 @@ export function SwipeCard({ profile, isTop, stackIndex, onSwipe }) {
             </div>
 
             {/* Bio */}
-            {profile.bio && <p className={styles.bio}>{profile.bio}</p>}
+            {/* {profile.bio && <p className={styles.bio}>{profile.bio}</p>} */}
+
+            <p className={styles.bio}>
+              Seeking deep chats, spontaneous weekend getaways, and exploring
+              hidden vinyl record bars.
+            </p>
           </div>
         </div>
       </div>

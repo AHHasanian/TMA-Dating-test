@@ -27,7 +27,7 @@ export default function Welcome() {
         {/* Main Content */}
         <Cardprofile />
         <MatchSuggestions
-          telegramId="900000001"
+          telegramId={user?.telegram_id || "900000001"}
           profiles={mockProfiles}
           onLike={(profile) => console.log("liked", profile.id)}
           onPass={(profile) => console.log("passed", profile.id)}

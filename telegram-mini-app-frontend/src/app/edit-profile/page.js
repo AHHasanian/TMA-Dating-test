@@ -61,7 +61,6 @@ export default function EditProfile() {
         tma_username: username,
         tma_first_name: firstName,
         tma_last_name: lastName,
-        tma_age: Number(age),
         tma_gender: gender || null,
         tma_sexual_orientation: sexualOrientation || null,
         tma_photo_url: finalPhotoUrl,
@@ -246,6 +245,7 @@ export default function EditProfile() {
                     <button
                       type="button"
                       className={styles.ageButton}
+                      disabled
                       aria-label="Decrease age"
                       onClick={() => {
                         setAge((currentAge) => {
@@ -271,6 +271,7 @@ export default function EditProfile() {
                     <button
                       type="button"
                       className={styles.ageButton}
+                      disabled
                       aria-label="Increase age"
                       onClick={() => {
                         setAge((currentAge) => {
